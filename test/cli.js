@@ -9,7 +9,7 @@ var connect = require('connect');
 
 var CLI = path.resolve(require('../package.json').bin.medic);
 var URLS_FILE = 'fixtures/urls.txt';
-var TEMP_SAVE_FILE = path.join(__dirname, 'fixtures/temp-results.json');
+var TEMP_OUTPUT_FILE = path.join(__dirname, 'fixtures/temp-results.json');
 var COMPARE_FILE = 'fixtures/results-previous.json';
 var PORT = 15000;
 var HTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Test</title></head><body></body></html>';
@@ -33,8 +33,8 @@ describe('cli', function () {
     });
 
     after(function () {
-        if (fs.existsSync(TEMP_SAVE_FILE)) {
-            fs.unlinkSync(TEMP_SAVE_FILE);
+        if (fs.existsSync(TEMP_OUTPUT_FILE)) {
+            fs.unlinkSync(TEMP_OUTPUT_FILE);
         }
         server.close();
     });
@@ -55,7 +55,7 @@ describe('cli', function () {
         );
     });
 
-    it('should save results to file', function (done) {
+    it('should output results to file', function (done) {
         var fixture = [{
             'url': 'http://localhost:' + PORT + '/1/',
             'statusCode': 200
@@ -65,17 +65,17 @@ describe('cli', function () {
         }];
 
         exec(
-            CLI + ' ' + URLS_FILE +' -s ' + TEMP_SAVE_FILE,
+            CLI + ' ' + URLS_FILE +' -o ' + TEMP_OUTPUT_FILE,
             {cwd:__dirname},
             function (error, stdout, stderr) {
                 if (error) {
                     return done(error);
                 }
 
-                var saveFileContent = fs.readFileSync(TEMP_SAVE_FILE, {encoding:'utf8'});
-                saveFileContent = JSON.parse(saveFileContent);
+                var outputFileContent = fs.readFileSync(TEMP_OUTPUT_FILE, {encoding:'utf8'});
+                outputFileContent = JSON.parse(outputFileContent);
 
-                expect(saveFileContent, 'saved results').to.deep.equal(fixture);
+                expect(outputFileContent, 'outputted results').to.deep.equal(fixture);
                 expect(stdout, 'stdout').to.equal(fixtureOutput);
                 expect(stderr, 'stderr').to.equal('');
                 done();
@@ -83,7 +83,7 @@ describe('cli', function () {
         );
     });
 
-    it('should output compare results', function (done) {
+    it('should log compare results', function (done) {
         var fixture = [
             '',
             'Changes',

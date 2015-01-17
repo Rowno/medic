@@ -47,7 +47,7 @@ Path:
 Options:
     -c, --compare   Path to a previous results file to compare against.
     -h, --help      Show this help text.
-    -s, --save      File path to save the results of this run to.
+    -o, --output    File path to output the results of this run to.
 ```
 
 
