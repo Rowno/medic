@@ -35,6 +35,7 @@ describe('index', function () {
             });
         });
 
+
         it('should track redirects', function () {
             var fixture = [{
                 'url': 'http://localhost/1/',
@@ -57,6 +58,7 @@ describe('index', function () {
             });
         });
 
+
         it('should set status code to 500 for ASP.NET 500 error page', function () {
             var fixture = [{
                 'url': 'http://localhost/errors/500.aspx?aspxerrorpath=/1/',
@@ -75,6 +77,7 @@ describe('index', function () {
                 expect(result).to.deep.equal(fixture);
             });
         });
+
 
         it('should call onProgress function with each URL check', function () {
             var fixture = [{
@@ -106,6 +109,7 @@ describe('index', function () {
                 expect(result, 'final result').to.deep.equal(fixture);
             });
         });
+
 
         it('should support standard callbacks', function (done) {
             var fixture = [{

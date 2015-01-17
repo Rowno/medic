@@ -8,9 +8,9 @@ var expect = require('chai').expect;
 var connect = require('connect');
 
 var CLI = path.resolve(require('../package.json').bin.medic);
-var URLS_FILE = 'fixtures/urls.txt';
+var URLS_FILE = path.join(__dirname, 'fixtures/urls.txt');
 var TEMP_OUTPUT_FILE = path.join(__dirname, 'fixtures/temp-results.json');
-var COMPARE_FILE = 'fixtures/results-previous.json';
+var COMPARE_FILE = path.join(__dirname, 'fixtures/results-previous.json');
 var PORT = 15000;
 var HTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Test</title></head><body></body></html>';
 var app = connect();
@@ -39,8 +39,9 @@ describe('cli', function () {
         server.close();
     });
 
-    it('should get status for urls in file', function (done) {
-        exec(
+
+    it('should get status of urls in file', function (done) {
+        var child = exec(
             CLI + ' ' + URLS_FILE,
             {cwd:__dirname},
             function (error, stdout, stderr) {
@@ -53,7 +54,29 @@ describe('cli', function () {
                 done();
             }
         );
+
+        child.stdin.end();
     });
+
+
+    it('should get status of urls passed through stdin', function (done) {
+        var child = exec(
+            CLI,
+            {cwd:__dirname},
+            function (error, stdout, stderr) {
+                if (error) {
+                    return done(error);
+                }
+
+                expect(stdout, 'stdout').to.equal(fixtureOutput);
+                expect(stderr, 'stderr').to.equal('');
+                done();
+            }
+        );
+
+        fs.createReadStream(URLS_FILE, {encoding:'utf8'}).pipe(child.stdin);
+    });
+
 
     it('should output results to file', function (done) {
         var fixture = [{
@@ -64,7 +87,7 @@ describe('cli', function () {
             'statusCode': 200
         }];
 
-        exec(
+        var child = exec(
             CLI + ' ' + URLS_FILE +' -o ' + TEMP_OUTPUT_FILE,
             {cwd:__dirname},
             function (error, stdout, stderr) {
@@ -81,7 +104,10 @@ describe('cli', function () {
                 done();
             }
         );
+
+        child.stdin.end();
     });
+
 
     it('should log compare results', function (done) {
         var fixture = [
@@ -94,7 +120,7 @@ describe('cli', function () {
 
         fixture = fixtureOutput + fixture;
 
-        exec(
+        var child = exec(
             CLI + ' ' + URLS_FILE +' -c ' + COMPARE_FILE,
             {cwd:__dirname},
             function (error, stdout, stderr) {
@@ -107,6 +133,8 @@ describe('cli', function () {
                 done();
             }
         );
+
+        child.stdin.end();
     });
 });
 

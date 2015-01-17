@@ -31,6 +31,12 @@ Run medic:
 medic urls.txt
 ```
 
+Also supports piping:
+Run medic:
+```bash
+cat urls.txt | medic
+```
+
 
 Usage
 -----
@@ -43,6 +49,7 @@ Usage: medic <path> [<options>]
 Path:
     Path to a file containing a list of URLs. Each URL must be on a separate
     line and lines not starting with http:// or https:// are ignored.
+    This parameter is optional if the URLs are being piped.
 
 Options:
     -c, --compare   Path to a previous results file to compare against.
