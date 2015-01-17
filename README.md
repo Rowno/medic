@@ -32,7 +32,6 @@ medic urls.txt
 ```
 
 Also supports piping:
-Run medic:
 ```bash
 cat urls.txt | medic
 ```
