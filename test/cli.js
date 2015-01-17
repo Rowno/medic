@@ -88,7 +88,7 @@ describe('cli', function () {
             '',
             'Changes',
             '',
-            '404 → 200  http://localhost:15000/1/',
+            '404 →  200  http://localhost:15000/1/',
             '',
         ].join('\n');
 
