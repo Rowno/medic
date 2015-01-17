@@ -1,0 +1,10 @@
+Usage: medic <path> [<options>]
+
+Path:
+    Path to a file containing a list of URLs. Each URL must be on a separate
+    line and lines not starting with http:// or https:// are ignored.
+
+Options:
+    -c, --compare   Path to a previous results file to compare against.
+    -h, --help      Show this help text.
+    -s, --save      File path to save the results of this run to.

@@ -1,0 +1,116 @@
+Medic
+=====
+
+[![Build Status](https://api.travis-ci.org/Rowno/medic.svg?branch=master)](https://travis-ci.org/Rowno/medic)
+[![Dependency Status](https://david-dm.org/Rowno/medic/status.svg)](https://david-dm.org/Rowno/medic)
+[![Gratipay](https://img.shields.io/gratipay/Rowno.svg)](https://gratipay.com/Rowno/)
+
+Perform bulk URL status checks and track changes.
+
+
+Getting Started
+---------------
+
+Install the Medic command line tool:
+```bash
+npm install -g medic
+```
+
+Create a `urls.txt` file:
+```
+# Home pages
+
+https://rolandwarmerdam.co.nz/
+https://www.google.com/
+https://twitter.com/
+http://example.com/
+```
+
+Run medic:
+```bash
+medic urls.txt
+```
+
+
+Usage
+-----
+
+### CLI
+
+```
+Usage: medic <path> [<options>]
+
+Path:
+    Path to a file containing a list of URLs. Each URL must be on a separate
+    line and lines not starting with http:// or https:// are ignored.
+
+Options:
+    -c, --compare   Path to a previous results file to compare against.
+    -h, --help      Show this help text.
+    -s, --save      File path to save the results of this run to.
+```
+
+
+### API
+
+#### `.check(object options, [function callback])` -> `Promise`
+Checks the status of all the passed URLs.
+
+##### Options
+
+###### `urls`
+Type: `array`
+
+###### `onProgress`
+Type: `function<object result>`
+
+Gets called on each checked URL and is passed the result.
+
+Example result:
+```json
+[
+  {
+    "url": "https://www.google.com/mail/",
+    "statusCode": 200,
+    "redirectUrl": "https://mail.google.com/mail/"
+  }, {
+    "url": "http://non-existent.example.com/",
+    "error": "getaddrinfo ENOTFOUND"
+  }
+]
+```
+
+
+#### `.compare(object options)` -> `array`
+Compares 2 result sets to find any changes.
+
+Example return:
+```json
+[
+  {
+    "current": {
+      "url": "https://reader.google.com/",
+      "statusCode": 404
+    },
+    "previous": {
+      "url": "https://reader.google.com/",
+      "statusCode": 200
+    }
+  }
+]
+```
+
+##### Options
+
+###### `currentResults`
+Type: `array`
+
+###### `previousResults`
+Type: `array`
+
+
+License
+-------
+Medic is released under the MIT license.
+
+Copyright © 2015 Roland Warmerdam.
