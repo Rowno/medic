@@ -54,6 +54,7 @@ Options:
     -c, --compare   Path to a previous results file to compare against.
     -h, --help      Show this help text.
     -o, --output    File path to output the results of this run to.
+    -v, --version   Print medic's version.
 ```
 
 
