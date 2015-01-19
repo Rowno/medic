@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "description": "Perform bulk URL status checks and track changes.",
   "author": "Roland Warmerdam (https://rolandwarmerdam.co.nz)",
-  "keywords": [],
+  "keywords": ["url", "http", "status", "code", "test"],
   "repository": "Rowno/medic",
   "license": "MIT",
   "main": "lib/index.js",
