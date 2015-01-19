@@ -23,7 +23,8 @@
     "get-stdin": "^3.0.2",
     "lodash": "^2.4.1",
     "meow": "^2.1.0",
-    "request": "^2.51.0"
+    "request": "^2.51.0",
+    "update-notifier": "^0.3.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",
