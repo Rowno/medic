@@ -7,6 +7,8 @@ Medic
 
 Perform bulk URL status checks and track changes.
 
+![Medic screenshot](screenshot.png)
+
 
 Getting Started
 ---------------
