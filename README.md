@@ -118,8 +118,18 @@ Type: `array`
 Type: `array`
 
 
+Related
+-------
+
+ - [sitemap-urls][] - Extract URLs from an XML sitemap.
+
+
 License
 -------
 Medic is released under the MIT license.
 
 Copyright © 2015 Roland Warmerdam.
+
+
+
+[sitemap-urls]: https://github.com/Rowno/sitemap-urls
