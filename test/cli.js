@@ -88,7 +88,7 @@ describe('cli', function () {
         }];
 
         var child = exec(
-            CLI + ' ' + URLS_FILE +' -o ' + TEMP_OUTPUT_FILE,
+            CLI + ' ' + URLS_FILE +' --output ' + TEMP_OUTPUT_FILE,
             {cwd:__dirname},
             function (error, stdout, stderr) {
                 if (error) {
@@ -121,7 +121,7 @@ describe('cli', function () {
         fixture = fixtureOutput + fixture;
 
         var child = exec(
-            CLI + ' ' + URLS_FILE +' -c ' + COMPARE_FILE,
+            CLI + ' ' + URLS_FILE +' --compare ' + COMPARE_FILE,
             {cwd:__dirname},
             function (error, stdout, stderr) {
                 if (error) {
@@ -137,5 +137,3 @@ describe('cli', function () {
         child.stdin.end();
     });
 });
-
-
