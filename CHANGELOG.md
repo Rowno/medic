@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](http://semver.org).
 
+## 3.0.0 / 2015-09-12
+ - change: update dependencies.
+ - add: node 4.0 support.
+ - remove: node 0.10 support.
+
 ## 2.0.0 / 2015-03-04
  - add: --concurrency option.
  - change: set a default concurrency (maxSockets) to prevent DOSing sites on Node >=0.12.
