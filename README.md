@@ -3,7 +3,6 @@ Medic
 
 [![Build Status](https://api.travis-ci.org/Rowno/medic.svg?branch=master)](https://travis-ci.org/Rowno/medic)
 [![Dependency Status](https://david-dm.org/Rowno/medic/status.svg)](https://david-dm.org/Rowno/medic)
-[![Gratipay](https://img.shields.io/gratipay/Rowno.svg)](https://gratipay.com/Rowno/)
 
 Perform bulk URL status checks and track changes.
 
