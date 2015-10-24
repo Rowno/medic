@@ -1,6 +1,5 @@
-/*jshint expr:true */
+/* eslint-disable no-sync */
 'use strict';
-
 var path = require('path');
 var fs = require('fs');
 var exec = require('child_process').exec;
@@ -22,14 +21,14 @@ var fixtureOutput = [
 ].join('\n');
 
 
-app.use(function (req, res){
+app.use(function (req, res) {
     res.end(HTML);
 });
 
 
 describe('cli', function () {
     before(function (done) {
-        server = app.listen(15000, 'localhost', done);
+        server = app.listen(PORT, 'localhost', done);
     });
 
     after(function () {
@@ -43,7 +42,7 @@ describe('cli', function () {
     it('should get status of urls in file', function (done) {
         var child = exec(
             CLI + ' ' + URLS_FILE,
-            {cwd:__dirname},
+            { cwd: __dirname },
             function (error, stdout, stderr) {
                 if (error) {
                     return done(error);
@@ -62,7 +61,7 @@ describe('cli', function () {
     it('should get status of urls passed through stdin', function (done) {
         var child = exec(
             CLI,
-            {cwd:__dirname},
+            { cwd: __dirname },
             function (error, stdout, stderr) {
                 if (error) {
                     return done(error);
@@ -74,28 +73,30 @@ describe('cli', function () {
             }
         );
 
-        fs.createReadStream(URLS_FILE, {encoding:'utf8'}).pipe(child.stdin);
+        fs.createReadStream(URLS_FILE, { encoding: 'utf8' }).pipe(child.stdin);
     });
 
 
     it('should output results to file', function (done) {
         var fixture = [{
-            'url': 'http://localhost:' + PORT + '/1/',
-            'statusCode': 200
+            url: 'http://localhost:' + PORT + '/1/',
+            statusCode: 200
         }, {
-            'url': 'http://localhost:' + PORT + '/2/',
-            'statusCode': 200
+            url: 'http://localhost:' + PORT + '/2/',
+            statusCode: 200
         }];
 
         var child = exec(
-            CLI + ' ' + URLS_FILE +' --output ' + TEMP_OUTPUT_FILE,
-            {cwd:__dirname},
+            CLI + ' ' + URLS_FILE + ' --output ' + TEMP_OUTPUT_FILE,
+            { cwd: __dirname },
             function (error, stdout, stderr) {
+                var outputFileContent;
+
                 if (error) {
                     return done(error);
                 }
 
-                var outputFileContent = fs.readFileSync(TEMP_OUTPUT_FILE, {encoding:'utf8'});
+                outputFileContent = fs.readFileSync(TEMP_OUTPUT_FILE, { encoding: 'utf8' });
                 outputFileContent = JSON.parse(outputFileContent);
 
                 expect(outputFileContent, 'outputted results').to.deep.equal(fixture);
@@ -110,19 +111,20 @@ describe('cli', function () {
 
 
     it('should log compare results', function (done) {
+        var child;
         var fixture = [
             '',
             'Changes',
             '',
-            '404 →  200  http://localhost:15000/1/',
+            '404 →  200  http://localhost:' + PORT + '/1/',
             '',
         ].join('\n');
 
         fixture = fixtureOutput + fixture;
 
-        var child = exec(
-            CLI + ' ' + URLS_FILE +' --compare ' + COMPARE_FILE,
-            {cwd:__dirname},
+        child = exec(
+            CLI + ' ' + URLS_FILE + ' --compare ' + COMPARE_FILE,
+            { cwd: __dirname },
             function (error, stdout, stderr) {
                 if (error) {
                     return done(error);

@@ -1,0 +1,6 @@
+---
+root: true
+extends: rowno
+env:
+    node: true
+    mocha: true

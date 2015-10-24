@@ -1,19 +1,14 @@
 'use strict';
+var loadGruntTasks = require('load-grunt-tasks');
+var timeGrunt = require('time-grunt');
+
 
 module.exports = function (grunt) {
-    require('load-grunt-tasks')(grunt);
-    require('time-grunt')(grunt);
-
+    timeGrunt(grunt);
 
     grunt.initConfig({
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
-            },
+        eslint: {
             all: [
-                '.jshintrc',
-                'package.json',
                 '**/*.js',
                 '!node_modules/**/*'
             ]
@@ -23,7 +18,7 @@ module.exports = function (grunt) {
         }
     });
 
-
-    grunt.registerTask('test', ['mochacli', 'jshint']);
+    loadGruntTasks(grunt);
+    grunt.registerTask('test', ['mochacli', 'eslint']);
     grunt.registerTask('default', 'test');
 };
