@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](http://semver.org).
 
+## 3.1.0 / 2015-10-29
+ - add: cookies option.
+ - add: yaml front matter support to urls file (only for cookies option atm).
+ - change: catch errors thrown in the cli.
+
 ## 3.0.0 / 2015-09-12
  - change: update dependencies.
  - add: node 4.0 support.
