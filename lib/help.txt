@@ -4,6 +4,7 @@ Path:
     Path to a file containing a list of URLs. Each URL must be on a separate
     line and lines not starting with http:// or https:// are ignored.
     This parameter is ignored when URLs are being piped.
+    File can also can also contain YAML front matter with the cookies option.
 
 Options:
     -c  --concurrency Number of concurrent requests per origin. Defaults to 5.

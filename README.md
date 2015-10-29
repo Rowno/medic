@@ -19,6 +19,11 @@ npm install -g medic
 
 Create a `urls.txt` file:
 ```
+---
+cookies:
+    - Location=nz
+---
+
 # Home pages
 
 https://rolandwarmerdam.co.nz/
@@ -50,6 +55,7 @@ Path:
     Path to a file containing a list of URLs. Each URL must be on a separate
     line and lines not starting with http:// or https:// are ignored.
     This parameter is ignored when URLs are being piped.
+    File can also can also contain YAML front matter with the cookies option.
 
 Options:
     -c  --concurrency Number of concurrent requests per origin. Defaults to 5.
@@ -66,6 +72,9 @@ Options:
 Checks the status of all the passed URLs.
 
 ##### Options
+
+###### `cookies`
+Type: `array`
 
 ###### `urls`
 Type: `array`
