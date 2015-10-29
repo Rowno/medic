@@ -133,6 +133,30 @@ describe('index', function () {
                 done();
             });
         });
+
+
+        it('should set cookies', function (done) {
+            var fixture = [{
+                url: 'http://localhost/1/',
+                statusCode: SUCCESS
+            }];
+
+            nock('http://localhost', { reqheaders: { Cookie: 'Location=nz' } })
+                .get('/1/')
+                .reply(SUCCESS, HTML);
+
+            medic.check({
+                cookies: ['Location=nz'],
+                urls: ['http://localhost/1/'],
+            }, function (error, result) {
+                if (error) {
+                    return done(error);
+                }
+
+                expect(result, 'final result').to.deep.equal(fixture);
+                done();
+            });
+        });
     });
 
 

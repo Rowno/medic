@@ -4,15 +4,16 @@ var path = require('path');
 var fs = require('fs');
 var exec = require('child_process').exec;
 var expect = require('chai').expect;
-var connect = require('connect');
+var express = require('express');
 
 var CLI = path.resolve(require('../package.json').bin.medic);
 var URLS_FILE = path.join(__dirname, 'fixtures/urls.txt');
 var TEMP_OUTPUT_FILE = path.join(__dirname, 'fixtures/temp-results.json');
 var COMPARE_FILE = path.join(__dirname, 'fixtures/results-previous.json');
 var PORT = 15000;
+var COOKIE_STATUS = 400;
 var HTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Test</title></head><body></body></html>';
-var app = connect();
+var app = express();
 var server;
 var fixtureOutput = [
     '1/2  ✔  200  http://localhost:' + PORT + '/1/',
@@ -22,7 +23,11 @@ var fixtureOutput = [
 
 
 app.use(function (req, res) {
-    res.end(HTML);
+    if (req.headers.cookie === 'Location=nz') {
+        res.status(COOKIE_STATUS).send(HTML);
+    } else {
+        res.end(HTML);
+    }
 });
 
 
@@ -131,6 +136,27 @@ describe('cli', function () {
                 }
 
                 expect(stdout, 'stdout').to.equal(fixture);
+                expect(stderr, 'stderr').to.equal('');
+                done();
+            }
+        );
+
+        child.stdin.end();
+    });
+
+
+    it('should set cookies from yaml front matter', function (done) {
+        var child;
+
+        child = exec(
+            CLI + ' ' + path.join(__dirname, 'fixtures/cookies.txt'),
+            { cwd: __dirname },
+            function (error, stdout, stderr) {
+                if (error) {
+                    return done(error);
+                }
+
+                expect(stdout, 'stdout').to.equal('1/1  ⚠  ' + COOKIE_STATUS + '  http://localhost:' + PORT + '/1/\n');
                 expect(stderr, 'stderr').to.equal('');
                 done();
             }

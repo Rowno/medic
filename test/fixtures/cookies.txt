@@ -1,0 +1,6 @@
+---
+cookies:
+    - Location=nz
+---
+
+http://localhost:15000/1/
