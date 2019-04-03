@@ -17,7 +17,7 @@
     "medic": "lib/cli.js"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "eslint '**/*.js' && mocha"
   },
   "engines": {
     "node": ">=0.12.0"
@@ -28,19 +28,17 @@
     "figures": "^1.3.5",
     "front-matter": "^2.0.0",
     "get-stdin": "^5.0.0",
-    "lodash": "^3.3.1",
+    "lodash": "^4.17.11",
     "meow": "^3.0.0",
     "request": "^2.51.0",
     "update-notifier": "^0.5.0"
   },
   "devDependencies": {
     "chai": "^3.2.0",
+    "eslint": "^1.5.1",
     "eslint-config-rowno": "^2.1.0",
     "express": "^4.13.3",
-    "grunt": "^0.4.5",
-    "grunt-eslint": "^17.3.1",
-    "grunt-mocha-cli": "^2.0.0",
-    "load-grunt-tasks": "^3.0.0",
+    "mocha": "^2.4.5",
     "nock": "^2.10.0",
     "time-grunt": "^1.0.0"
   },
