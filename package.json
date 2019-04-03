@@ -1,6 +1,6 @@
 {
   "name": "medic",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Perform bulk URL status checks and track changes.",
   "author": "Roland Warmerdam (https://roland.codes)",
   "keywords": [
