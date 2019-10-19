@@ -39,8 +39,8 @@
     "eslint-config-prettier": "^6.4.0",
     "eslint-config-xo": "^0.27.2",
     "express": "^4.13.3",
-    "mocha": "^2.4.5",
-    "nock": "^2.10.0",
+    "mocha": "^6.2.2",
+    "nock": "^11.4.0",
     "time-grunt": "^1.0.0"
   },
   "files": [
