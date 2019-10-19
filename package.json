@@ -20,7 +20,7 @@
     "test": "eslint '**/*.js' && mocha"
   },
   "engines": {
-    "node": ">=0.12.0"
+    "node": ">=8"
   },
   "dependencies": {
     "bluebird": "^2.6.2",
