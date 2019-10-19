@@ -1,21 +1,20 @@
-/* eslint-disable no-sync */
 'use strict';
-var path = require('path');
-var fs = require('fs');
-var exec = require('child_process').exec;
-var expect = require('chai').expect;
-var express = require('express');
+const path = require('path');
+const fs = require('fs');
+const {exec} = require('child_process');
+const {expect} = require('chai');
+const express = require('express');
 
-var CLI = path.resolve(require('../package.json').bin.medic);
-var URLS_FILE = path.join(__dirname, 'fixtures/urls.txt');
-var TEMP_OUTPUT_FILE = path.join(__dirname, 'fixtures/temp-results.json');
-var COMPARE_FILE = path.join(__dirname, 'fixtures/results-previous.json');
-var PORT = 15000;
-var COOKIE_STATUS = 400;
-var HTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Test</title></head><body></body></html>';
-var app = express();
-var server;
-var fixtureOutput = [
+const CLI = path.resolve(require('../package.json').bin.medic);
+const URLS_FILE = path.join(__dirname, 'fixtures/urls.txt');
+const TEMP_OUTPUT_FILE = path.join(__dirname, 'fixtures/temp-results.json');
+const COMPARE_FILE = path.join(__dirname, 'fixtures/results-previous.json');
+const PORT = 15000;
+const COOKIE_STATUS = 400;
+const HTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Test</title></head><body></body></html>';
+const app = express();
+let server;
+const fixtureOutput = [
     '1/2  ✔  200  http://localhost:' + PORT + '/1/',
     '2/2  ✔  200  http://localhost:' + PORT + '/2/',
     '',
@@ -40,12 +39,13 @@ describe('cli', function () {
         if (fs.existsSync(TEMP_OUTPUT_FILE)) {
             fs.unlinkSync(TEMP_OUTPUT_FILE);
         }
+
         server.close();
     });
 
 
     it('should get status of urls in file', function (done) {
-        var child = exec(
+        const child = exec(
             CLI + ' ' + URLS_FILE,
             { cwd: __dirname },
             function (error, stdout, stderr) {
@@ -64,7 +64,7 @@ describe('cli', function () {
 
 
     it('should get status of urls passed through stdin', function (done) {
-        var child = exec(
+        const child = exec(
             CLI,
             { cwd: __dirname },
             function (error, stdout, stderr) {
@@ -83,7 +83,7 @@ describe('cli', function () {
 
 
     it('should output results to file', function (done) {
-        var fixture = [{
+        const fixture = [{
             url: 'http://localhost:' + PORT + '/1/',
             statusCode: 200
         }, {
@@ -91,11 +91,11 @@ describe('cli', function () {
             statusCode: 200
         }];
 
-        var child = exec(
+        const child = exec(
             CLI + ' ' + URLS_FILE + ' --output ' + TEMP_OUTPUT_FILE,
             { cwd: __dirname },
             function (error, stdout, stderr) {
-                var outputFileContent;
+                let outputFileContent;
 
                 if (error) {
                     return done(error);
@@ -116,8 +116,7 @@ describe('cli', function () {
 
 
     it('should log compare results', function (done) {
-        var child;
-        var fixture = [
+        let fixture = [
             '',
             'Changes',
             '',
@@ -127,7 +126,7 @@ describe('cli', function () {
 
         fixture = fixtureOutput + fixture;
 
-        child = exec(
+        const child = exec(
             CLI + ' ' + URLS_FILE + ' --compare ' + COMPARE_FILE,
             { cwd: __dirname },
             function (error, stdout, stderr) {
@@ -146,9 +145,7 @@ describe('cli', function () {
 
 
     it('should set cookies from yaml front matter', function (done) {
-        var child;
-
-        child = exec(
+        const child = exec(
             CLI + ' ' + path.join(__dirname, 'fixtures/cookies.txt'),
             { cwd: __dirname },
             function (error, stdout, stderr) {

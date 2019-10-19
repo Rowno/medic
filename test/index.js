@@ -1,18 +1,18 @@
 'use strict';
-var expect = require('chai').expect;
-var nock = require('nock');
-var medic = require('../');
+const {expect} = require('chai');
+const nock = require('nock');
+const medic = require('../');
 
-var SUCCESS = 200;
-var MOVED = 301;
-var NOT_FOUND = 404;
-var HTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Test</title></head><body></body></html>';
+const SUCCESS = 200;
+const MOVED = 301;
+const NOT_FOUND = 404;
+const HTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Test</title></head><body></body></html>';
 
 
 describe('index', function () {
     describe('#check', function () {
         it('should get the status of urls', function () {
-            var fixture = [{
+            const fixture = [{
                 url: 'http://localhost/1/',
                 statusCode: SUCCESS
             }, {
@@ -38,7 +38,7 @@ describe('index', function () {
 
 
         it('should track redirects', function () {
-            var fixture = [{
+            const fixture = [{
                 url: 'http://localhost/1/',
                 statusCode: SUCCESS,
                 redirectUrl: 'http://localhost/2/'
@@ -61,7 +61,7 @@ describe('index', function () {
 
 
         it('should set status code to 500 for ASP.NET 500 error page', function () {
-            var fixture = [{
+            const fixture = [{
                 url: 'http://localhost/errors/500.aspx?aspxerrorpath=/1/',
                 statusCode: 500
             }];
@@ -81,14 +81,14 @@ describe('index', function () {
 
 
         it('should call onProgress function with each URL check', function () {
-            var fixture = [{
+            const fixture = [{
                 url: 'http://localhost/1/',
                 statusCode: SUCCESS
             }, {
                 url: 'http://localhost/2/',
                 statusCode: NOT_FOUND
             }];
-            var count = 0;
+            let count = 0;
 
             nock('http://localhost')
                 .get('/1/')
@@ -101,7 +101,7 @@ describe('index', function () {
                     'http://localhost/1/',
                     'http://localhost/2/'
                 ],
-                onProgress: function (result) {
+                onProgress (result) {
                     expect(result, 'progress result').to.deep.equal(fixture[count]);
                     count += 1;
                 }
@@ -113,7 +113,7 @@ describe('index', function () {
 
 
         it('should support standard callbacks', function (done) {
-            var fixture = [{
+            const fixture = [{
                 url: 'http://localhost/1/',
                 statusCode: SUCCESS
             }];
@@ -136,7 +136,7 @@ describe('index', function () {
 
 
         it('should set cookies', function (done) {
-            var fixture = [{
+            const fixture = [{
                 url: 'http://localhost/1/',
                 statusCode: SUCCESS
             }];
@@ -162,21 +162,21 @@ describe('index', function () {
 
     describe('#compare', function () {
         it('should return results that have different status codes', function () {
-            var fixtureCurrent = [{
+            const fixtureCurrent = [{
                 url: 'http://localhost/1/',
                 statusCode: SUCCESS
             }, {
                 url: 'http://localhost/2/',
                 statusCode: NOT_FOUND
             }];
-            var fixturePrevious = [{
+            const fixturePrevious = [{
                 url: 'http://localhost/1/',
                 statusCode: SUCCESS
             }, {
                 url: 'http://localhost/2/',
                 statusCode: SUCCESS
             }];
-            var fixtureCompare = [{
+            const fixtureCompare = [{
                 current: {
                     url: 'http://localhost/2/',
                     statusCode: NOT_FOUND
@@ -187,7 +187,7 @@ describe('index', function () {
                 }
             }];
 
-            var result = medic.compare({
+            const result = medic.compare({
                 currentResults: fixtureCurrent,
                 previousResults: fixturePrevious
             });
